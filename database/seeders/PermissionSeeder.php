@@ -33,6 +33,10 @@ class PermissionSeeder extends Seeder
             'create-contacts',
             'edit-contacts',
             'delete-contacts',
+            'access-categories',
+            'create-categories',
+            'edit-categories',
+            'delete-categories',
             
         ];
 

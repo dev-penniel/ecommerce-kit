@@ -257,12 +257,12 @@ new class extends Component
                 </flux:breadcrumbs>
             </div>
 
-            @can('create-users')
+            
                 <flux:modal.trigger name="create-category">
                     <flux:button icon="plus" size="sm" variant="primary" class="btn-sm">New Contact</flux:button>
                 </flux:modal.trigger>
                 
-            @endcan
+            
         </div>
 
         <flux:separator variant="subtle" />

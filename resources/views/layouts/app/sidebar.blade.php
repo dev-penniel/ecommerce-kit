@@ -18,6 +18,9 @@
                     <flux:sidebar.item icon="archive-box" :href="route('contacts')" :current="request()->routeIs('contacts')" wire:navigate>
                         {{ __('Contacts') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="archive-box" :href="route('categories')" :current="request()->routeIs('categories')" wire:navigate>
+                        {{ __('Categories') }}
+                    </flux:sidebar.item>
                     
                     @php
                         $unreadCount = auth()->user()->unreadNotifications()->count();
