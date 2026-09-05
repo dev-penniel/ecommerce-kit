@@ -4,6 +4,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Computed;
 use App\Models\Categories;
+use App\Models\Product;
 
 new class extends Component
 {
@@ -39,6 +40,33 @@ new class extends Component
             'is_active' => ['required'],
 
         ]);
+
+        $slug = Str::slug($this->name);
+
+        $product = Product::create([
+            'category_id' => $this->category_id,
+            'name' => $validated['name'],
+            'slug' => $slug,
+            'description' => $validated['description'],
+            'price' => $validated['price'],
+            'stock' => $validated['stock'],
+            'is_active' => $validated['is_active']
+        ]);
+
+        // handle images
+        foreach ($this->images as $index => $image) {
+            $path = $image->store('products', 'public');
+
+            $product->images()->create([
+                'image' => $path,
+                'is_primary' => $index === 0,
+                'sort_order' => $index + 1,
+            ]);
+        }
+
+        $this->dispatch('product-created');
+        $this->reset();
+
     }
 };
 ?>
@@ -79,7 +107,7 @@ new class extends Component
 
 
     {{-- Form --}}
-    <form wire:submit="save" class="space-y-6">
+    <form wire:submit="create" class="space-y-6">
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
