@@ -18,6 +18,15 @@ new class extends Component {
     public $name, $originalName, $editedName, $slug, $id, $categoryId, $deleteName;
     public $search = '';
 
+
+    public function mount()
+    {
+        abort_unless(
+            auth()->user()->can('access-categories'),
+            403
+        );
+    }
+
     #[computed]
     public function categories()
     {
@@ -29,6 +38,12 @@ new class extends Component {
 
     public function createCategory()
     {
+
+        abort_unless(
+            auth()->user()->can('create-categories'),
+            403
+        );
+
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')],
         ]);
@@ -58,6 +73,12 @@ new class extends Component {
 
     public function updateCategory($id)
     {
+
+        abort_unless(
+            auth()->user()->can('edit-categories'),
+            403
+        );
+
         $validated = $this->validate([
             'editedName' => ['required', 'string', 'max:255', Rule::unique('categories', 'name')->ignore($id)],
         ]);
@@ -195,9 +216,13 @@ new class extends Component {
                 </flux:breadcrumbs>
             </div>
 
-            <flux:modal.trigger name="create-category">
-                <flux:button icon="plus" size="sm" variant="primary" class="btn-sm">New Category</flux:button>
-            </flux:modal.trigger>
+            @can('create-categories')
+                
+                <flux:modal.trigger name="create-category">
+                    <flux:button icon="plus" size="sm" variant="primary" class="btn-sm">New Category</flux:button>
+                </flux:modal.trigger>
+            @endcan
+
         </div>
         <flux:separator variant="subtle" />
     </div>
@@ -252,26 +277,33 @@ new class extends Component {
 
                                 <flux:menu>
 
-                                    <flux:modal.trigger name="update-category">
+                                    @can('edit-categories')
 
-                                        <flux:menu.item
-                                            icon="pencil"
-                                            wire:click="edit({{ $category->id }})"
-                                        >
-                                            Edit
-                                        </flux:menu.item>
-                                    </flux:modal.trigger>
+                                        <flux:modal.trigger name="update-category">
 
+                                            <flux:menu.item
+                                                icon="pencil"
+                                                wire:click="edit({{ $category->id }})"
+                                            >
+                                                Edit
+                                            </flux:menu.item>
+                                        </flux:modal.trigger>
+
+                                    @endcan
 
                                     <flux:menu.separator />
 
-                                    <flux:menu.item
-                                        variant="danger"
-                                        icon="trash"
-                                        wire:click="confirmDelete({{ $category->id }})"
-                                    >
-                                        Delete
-                                    </flux:menu.item>
+                                    @can('delete-categories')
+
+                                        <flux:menu.item
+                                            variant="danger"
+                                            icon="trash"
+                                            wire:click="confirmDelete({{ $category->id }})"
+                                        >
+                                            Delete
+                                        </flux:menu.item>
+
+                                    @endcan
 
                                 </flux:menu>
 
@@ -299,9 +331,12 @@ new class extends Component {
                                     You haven't added any categories yet. Create your first category to get started.
                                 </flux:text>
 
-                                <flux:modal.trigger name="create-category">
-                                    <flux:button icon="plus" size="sm" variant="primary" class="btn-sm mt-2">New Category</flux:button>
-                                </flux:modal.trigger>
+                                @can('create-categories')
+                
+                                    <flux:modal.trigger name="create-category">
+                                        <flux:button icon="plus" size="sm" variant="primary" class="btn-sm mt-2">New Category</flux:button>
+                                    </flux:modal.trigger>
+                                @endcan
 
                             </div>
 
