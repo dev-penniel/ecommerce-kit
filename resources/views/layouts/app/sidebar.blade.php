@@ -2,6 +2,11 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
         @include('partials.head')
+        <style>
+            [x-cloak] {
+                display: none !important;
+            }
+        </style>
     </head>
     <body class="min-h-screen bg-white dark:bg-zinc-900">
         <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
@@ -18,10 +23,10 @@
                     <flux:sidebar.item icon="archive-box" :href="route('contacts')" :current="request()->routeIs('contacts')" wire:navigate>
                         {{ __('Contacts') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="archive-box" :href="route('categories')" :current="request()->routeIs('categories')" wire:navigate>
+                    <flux:sidebar.item icon="clipboard-document-list" :href="route('categories')" :current="request()->routeIs('categories')" wire:navigate>
                         {{ __('Categories') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="archive-box" :href="route('products')" :current="request()->routeIs('products')" wire:navigate>
+                    <flux:sidebar.item icon="archive-box-arrow-down" :href="route('products')" :current="request()->routeIs('products')" wire:navigate>
                         {{ __('Products') }}
                     </flux:sidebar.item>
                     

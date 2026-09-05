@@ -50,6 +50,7 @@ new class extends Component
                 variant="primary"
                 icon="plus"
                 wire:navigate
+                size="sm"
                 href="{{ route('products.create') }}"
             >
                 Add Product
@@ -172,7 +173,7 @@ new class extends Component
                                 variant="subtle"
                                 icon="eye"
                                 wire:navigate
-                                href="#"
+                                href="{{ route('products.show', $product->id) }}"
                             >
                                 View
                             </flux:button>
