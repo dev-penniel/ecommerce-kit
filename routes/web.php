@@ -13,7 +13,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('/contacts', 'pages::contacts.index' )->name('contacts');
     Route::livewire('/notifications', 'pages::notifications.index' )->name('notifications');
 
-    Route::livewire('/categories', 'pages::categories.categories' )->name('categories');
+    Route::livewire('/categories', 'pages::categories.categories' )->name('categories')->middleware('permission:access-categories');
+
+    Route::livewire('/products', 'pages::products.index' )->name('products');
 
 
     Route::livewire('/roles', 'pages::roles.index' )->name('roles');

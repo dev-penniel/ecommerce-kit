@@ -10,4 +10,15 @@ class Categories extends Model
         'name',
         'slug',
     ];
+
+    protected function user()
+    {
+        $this->belongsTo(User::class);
+    }
+
+    protected function products()
+    {
+        $this->belongsToMany(Product::class);
+    }
 }
+

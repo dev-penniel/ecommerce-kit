@@ -50,6 +50,16 @@ class User extends Authenticatable implements PasskeyUser, MustVerifyEmail
         ];
     }
 
+    protected function categories()
+    {
+        $this->hasMany(Categories::class);
+    }
+
+    protected function products()
+    {
+        $this->hasMany(Product::class);
+    }
+
     /**
      * Get the user's initials
      */
