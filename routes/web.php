@@ -16,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('/categories', 'pages::categories.categories' )->name('categories')->middleware('permission:access-categories');
 
     Route::livewire('/products', 'pages::products.index' )->name('products');
+    Route::livewire('/products/create', 'pages::products.create' )->name('products.create');
 
 
     Route::livewire('/roles', 'pages::roles.index' )->name('roles');

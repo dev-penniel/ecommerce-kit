@@ -14,7 +14,7 @@
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
             {{-- Contacts --}}
-            <flux:card>
+            <flux:card class="dark:bg-zinc-900">
                 <div class="flex items-center justify-between">
                     <div>
                         <flux:text>Total Contacts</flux:text>
@@ -33,7 +33,7 @@
             </flux:card>
 
             {{-- Companies --}}
-            <flux:card>
+            <flux:card class="dark:bg-zinc-900">
                 <div class="flex items-center justify-between">
                     <div>
                         <flux:text>Companies</flux:text>
@@ -52,7 +52,7 @@
             </flux:card>
 
             {{-- New Contacts --}}
-            <flux:card>
+            <flux:card class="dark:bg-zinc-900">
                 <div class="flex items-center justify-between">
                     <div>
                         <flux:text>New This Month</flux:text>
@@ -71,7 +71,7 @@
             </flux:card>
 
             {{-- Activity --}}
-            <flux:card>
+            <flux:card class="dark:bg-zinc-900">
                 <div class="flex items-center justify-between">
                     <div>
                         <flux:text>Activity</flux:text>
@@ -94,7 +94,7 @@
         <div class="grid gap-6 lg:grid-cols-3">
 
             {{-- Recent Contacts --}}
-            <flux:card class="lg:col-span-2">
+            <flux:card class="lg:col-span-2 dark:bg-zinc-900">
 
                 <div class="flex items-center justify-between">
                     <div>
@@ -215,7 +215,7 @@
             </flux:card>
 
             {{-- Quick Actions --}}
-            <flux:card>
+            <flux:card class="dark:bg-zinc-900">
 
                 <flux:heading size="lg">Quick Actions</flux:heading>
 
@@ -269,7 +269,7 @@
         <div class="grid gap-6 lg:grid-cols-2">
 
             {{-- Recent Activity --}}
-            <flux:card>
+            <flux:card class="dark:bg-zinc-900">
 
                 <flux:heading size="lg">Recent Activity</flux:heading>
 
@@ -334,7 +334,7 @@
             </flux:card>
 
             {{-- Getting Started --}}
-            <flux:card>
+            <flux:card class="dark:bg-zinc-900">
 
                 <flux:heading size="lg">Getting Started</flux:heading>
 
