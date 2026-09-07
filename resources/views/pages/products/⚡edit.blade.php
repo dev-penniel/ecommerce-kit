@@ -19,18 +19,32 @@ new class extends Component
     public bool $is_active = true;
     public array $images = [];
     public $search = '';
+    public $product;
+    public $selectedCategory;
+    public $currentImages;
+    public $categories;
 
-
-    #[computed]
-    public function categories()
+    public function mount(Product $product)
     {
-        return Categories::when($this->search, function ($query){
-            $query->where('name', 'like', '%'.$this->search.'%');
-        })->latest()->paginate(50);
+
+        $this->product = $product;
+        $this->categories = Categories::latest()->get(['id', 'name']);
+
+        $this->name = $product->name;
+        $this->description = $product->description;
+        $this->price = $product->price;
+        $this->stock = $product->stock;
+        $this->is_active = $product->is_active;
+
+        // merge category
+        $this->category_id = $product->category_id;
+        // $this->currentImages = $product->images();
+
     }
 
-    public function create()
+    public function update()
     {
+
         $validated = $this->validate([
 
             'name' => ['required', 'max:266'],
@@ -43,7 +57,7 @@ new class extends Component
 
         $slug = Str::slug($this->name);
 
-        $product = Product::create([
+        $this->product->update([
             'category_id' => $this->category_id,
             'name' => $validated['name'],
             'slug' => $slug,
@@ -64,7 +78,7 @@ new class extends Component
             ]);
         }
 
-        $this->dispatch('product-created');
+        $this->dispatch('product-updated');
         $this->reset();
 
     }
@@ -82,7 +96,7 @@ new class extends Component
                     </a>
 
                     <flux:heading size="xl" level="1">
-                        {{ __('New Product') }}
+                        {{ __('Edit product - ') }}{{ $name }}
                     </flux:heading>
                 </div>
 
@@ -96,7 +110,11 @@ new class extends Component
                     </flux:breadcrumbs.item>
 
                     <flux:breadcrumbs.item>
-                        Create
+                        edit
+                    </flux:breadcrumbs.item>
+
+                    <flux:breadcrumbs.item>
+                        {{ $name }}
                     </flux:breadcrumbs.item>
                 </flux:breadcrumbs>
             </div>
@@ -107,7 +125,7 @@ new class extends Component
 
 
     {{-- Form --}}
-    <form wire:submit="create" class="space-y-6">
+    <form wire:submit="update" class="space-y-6">
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -117,11 +135,11 @@ new class extends Component
 
                     <div>
                         <flux:heading size="lg">
-                            Product Information
+                            Edit Product Information
                         </flux:heading>
 
                         <flux:text class="mt-1">
-                            Add the basic information about your product.
+                            Update information about your product.
                         </flux:text>
                     </div>
 
@@ -344,6 +362,12 @@ new class extends Component
 
                                 </div>
                             </template>
+                            
+                            {{-- @if ((!$this->images || count($this->images) === 0) && (!$currentImages || count($currentImages) === 0))
+                                <div class="mt-2 text-sm text-gray-500 italic">
+                                    No additional images uploaded
+                                </div>
+                            @endif --}}
 
 
                             <flux:error name="images.*" />
@@ -390,10 +414,11 @@ new class extends Component
                     <flux:button
                         type="submit"
                         variant="primary"
+                        size="sm"
                         wire:loading.attr="disabled"
                     >
-                        <span wire:loading.remove wire:target="save">
-                            Create Product
+                        <span wire:loading.remove wire:target="update">
+                            Save
                         </span>
 
                         <span wire:loading wire:target="save">

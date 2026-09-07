@@ -26,7 +26,7 @@ new class extends Component
 };
 ?>
 
-<div class="container">
+<div class="max-w-[1200px] mx-auto">
     {{-- Header --}}
     <div class="relative mb-6 w-full">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -67,7 +67,7 @@ new class extends Component
 
                 <flux:button
                     wire:navigate
-                    {{-- href="{{ route('products.edit', $product) }}" --}}
+                    href="{{ route('products.edit', $product) }}"
                     icon="pencil"
                     size="sm"
                     variant="primary"
