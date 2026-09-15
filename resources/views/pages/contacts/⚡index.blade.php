@@ -396,5 +396,6 @@ new class extends Component
 
             </flux:table.rows>
         </flux:table>
+        
     </div>
 </div>

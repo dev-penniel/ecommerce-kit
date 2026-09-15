@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
+Route::livewire('/', 'pages::welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -12,6 +12,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::livewire('/contacts', 'pages::contacts.index' )->name('contacts');
     Route::livewire('/notifications', 'pages::notifications.index' )->name('notifications');
+    Route::livewire('/checkout', 'pages::checkout.index' )->name('checkout');
 
     Route::livewire('/categories', 'pages::categories.categories' )->name('categories')->middleware('permission:access-categories');
 
