@@ -144,6 +144,9 @@ class extends Component
     x-data="{ cartOpen: false }"
     class="min-h-screen bg-[#fafaf9] text-zinc-900"
 >
+
+    
+
     <!-- ============================================================
          NAVIGATION
     ============================================================= -->
@@ -185,18 +188,29 @@ class extends Component
                         @click="cartOpen = true"
                         class="group relative flex h-11 w-11 items-center justify-center rounded-full bg-zinc-950 text-white shadow-sm transition hover:scale-105 hover:shadow-lg"
                     >
-                        <svg class="h-5 w-5 transition-transform duration-300 group-hover:-rotate-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3 4h2l1.5 11h10L19 7H6"/>
+                        <svg
+                            class="h-5 w-5 transition-transform duration-300 group-hover:-rotate-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.7"
+                                d="M3 4h2l1.5 11h10L19 7H6"
+                            />
                             <circle cx="9" cy="19" r="1"/>
                             <circle cx="17" cy="19" r="1"/>
                         </svg>
 
-                        <span
-                            x-show="$wire.cartCount > 0"
-                            class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-zinc-950 ring-2 ring-[#fafaf9]"
-                        >
-                            {{ $this->cartCount }}
-                        </span>
+                        @if ($this->cartCount > 0)
+                            <span
+                                class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-zinc-950 ring-2 ring-[#fafaf9]"
+                            >
+                                {{ $this->cartCount }}
+                            </span>
+                        @endif
                     </button>
                 </div>
             </div>
@@ -479,10 +493,31 @@ class extends Component
 
                 <button
                     type="button"
-                    @click="cartOpen = true"
+                    wire:click="addToCart({{ $product->id }})"
+                    x-data="{ added: false }"
+                    @click="added = true; setTimeout(() => added = false, 1200)"
                     class="absolute bottom-4 right-4 flex h-12 w-12 translate-y-3 items-center justify-center rounded-full bg-white text-zinc-950 opacity-0 shadow-xl transition-all duration-300 hover:scale-110 group-hover:translate-y-0 group-hover:opacity-100"
+                    :class="added ? 'scale-110 bg-emerald-500 text-white' : 'bg-white text-zinc-950'"
                 >
-                    +
+                    <span
+                        x-show="!added"
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="scale-0 opacity-0"
+                        x-transition:enter-end="scale-100 opacity-100"
+                    >
+                        +
+                    </span>
+
+                    <span
+                        x-show="added"
+                        x-cloak
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="scale-0 opacity-0"
+                        x-transition:enter-end="scale-100 opacity-100"
+                        class="text-lg font-bold"
+                    >
+                        ✓
+                    </span>
                 </button>
 
             </div>
