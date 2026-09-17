@@ -24,7 +24,7 @@
 
          @livewireStyles
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-900">
+    <body class="min-h-screen bg-white dark:bg-zinc-900" x-data="{ cartOpen: false }">
 
             <!-- Global Cart Toast -->
             <div
@@ -181,7 +181,6 @@
 
         {{ $slot }}
 
-        
 
         <livewire:components.cart-drawer />
 

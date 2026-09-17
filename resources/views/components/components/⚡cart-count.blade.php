@@ -15,10 +15,10 @@ new class extends Component
         
     }
 
-    #[On('cart-item-added')] 
+    #[On(['cart-item-added', 'cart-cleared', 'cart-updated'])] 
     public function refreshCartCount() 
     { 
-        unset($this->cartCount); 
+        unset($this->cartCount);
         
     }
 };
