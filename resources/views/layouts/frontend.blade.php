@@ -184,6 +184,25 @@
 
         <livewire:components.cart-drawer />
 
+            <!-- ============================================================
+                FOOTER
+            ============================================================= -->
+
+            <footer class="border-t border-zinc-200 bg-white">
+                <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+                    <div class="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                        <div>
+                            <p class="text-sm font-semibold">Essentials kit</p>
+                            <p class="mt-1 text-xs text-zinc-400">Curated for everyday life.</p>
+                        </div>
+
+                        <p class="text-xs text-zinc-400">
+                            © 2026 Penniel SOftware. All rights reserved.
+                        </p>
+                    </div>
+                </div>
+            </footer>
+
         @livewireScripts
 
         <script>
