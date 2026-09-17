@@ -112,8 +112,173 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-- ============================================================
+                NAVIGATION
+            ============================================================= -->
+
+            <header class="sticky top-0 z-40 border-b border-zinc-200/70 bg-[#fafaf9]/90 backdrop-blur-xl">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div class="flex h-20 items-center justify-between">
+
+                        <!-- Brand -->
+                        <a href="/" class="group flex items-center gap-3">
+                            <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-zinc-950 text-white shadow-sm transition-transform duration-300 group-hover:rotate-3">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M6 7h12l1 13H5L6 7Z"/>
+                                    <path stroke-linecap="round" stroke-width="1.8" d="M9 7a3 3 0 0 1 6 0"/>
+                                </svg>
+                            </div>
+
+                            <div>
+                                <span class="block text-sm font-semibold tracking-tight">Essentials</span>
+                                <span class="hidden text-[11px] text-zinc-500 sm:block">Curated for everyday life</span>
+                            </div>
+                        </a>
+
+                        <!-- Navigation -->
+                        <nav class="hidden items-center gap-8 md:flex">
+                            <a href="#shop" class="text-sm font-medium text-zinc-900 transition hover:text-zinc-500">Shop</a>
+                            <a href="#featured" class="text-sm font-medium text-zinc-500 transition hover:text-zinc-900">Featured</a>
+                            <a href="#about" class="text-sm font-medium text-zinc-500 transition hover:text-zinc-900">About</a>
+                        </nav>
+
+                        <!-- Actions -->
+                        <div class="flex items-center gap-2">
+                            <a href="#" class="hidden rounded-full px-4 py-2 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-950 sm:block">
+                                Login
+                            </a>
+
+                            <button
+                                type="button"
+                                @click="cartOpen = true"
+                                class="group relative flex h-11 w-11 items-center justify-center rounded-full bg-zinc-950 text-white shadow-sm transition hover:scale-105 hover:shadow-lg"
+                            >
+                                <svg
+                                    class="h-5 w-5 transition-transform duration-300 group-hover:-rotate-6"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.7"
+                                        d="M3 4h2l1.5 11h10L19 7H6"
+                                    />
+                                    <circle cx="9" cy="19" r="1"/>
+                                    <circle cx="17" cy="19" r="1"/>
+                                </svg>
+
+                                <livewire:components.cart-count />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+
         {{ $slot }}
 
+        
+
+        <livewire:components.cart-drawer />
+
         @livewireScripts
+
+        <script>
+            function storefront() {
+                return {
+
+                    cartOpen: false,
+
+                    toast: {
+                        visible: false,
+                        title: '',
+                        message: '',
+                        type: 'success',
+                    },
+
+                    toastTimer: null,
+
+                    init() {
+
+                        this.$wire.on('cart-item-added', (event) => {
+
+                            this.showToast(
+                                'Added to your bag',
+                                `${event.productName} is now in your shopping bag.`,
+                                'success'
+                            );
+
+                            this.cartOpen = true;
+
+                        });
+
+                        this.$wire.on('cart-item-removed', () => {
+
+                            this.showToast(
+                                'Removed',
+                                'The item was removed from your shopping bag.',
+                                'success'
+                            );
+
+                        });
+
+                        this.$wire.on('cart-cleared', () => {
+
+                            this.showToast(
+                                'Bag cleared',
+                                'All items have been removed.',
+                                'success'
+                            );
+
+                        });
+
+                        this.$wire.on('cart-error', (event) => {
+
+                            this.showToast(
+                                'Unable to update bag',
+                                event.message,
+                                'error'
+                            );
+
+                        });
+
+                    },
+
+                    addProduct(productId) {
+
+                        this.$wire.addToCart(productId, 1);
+
+                    },
+
+                    quickAdd(productId) {
+
+                        this.$wire.addToCart(productId, 1);
+
+                    },
+
+                    showToast(title, message, type = 'success') {
+
+                        clearTimeout(this.toastTimer);
+
+                        this.toast.title = title;
+                        this.toast.message = message;
+                        this.toast.type = type;
+                        this.toast.visible = true;
+
+                        this.toastTimer = setTimeout(() => {
+
+                            this.toast.visible = false;
+
+                        }, 3200);
+
+                    },
+
+                };
+            }
+        </script>
     </body>
 </html> 
