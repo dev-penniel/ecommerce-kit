@@ -139,7 +139,7 @@
 
                         <!-- Navigation -->
                         <nav class="hidden items-center gap-8 md:flex">
-                            <a href="#shop" class="text-sm font-medium text-zinc-900 transition hover:text-zinc-500">Shop</a>
+                            <a href="{{ route('shop') }}" class="text-sm font-medium text-zinc-900 transition hover:text-zinc-500">Shop</a>
                             <a href="#featured" class="text-sm font-medium text-zinc-500 transition hover:text-zinc-900">Featured</a>
                             <a href="#about" class="text-sm font-medium text-zinc-500 transition hover:text-zinc-900">About</a>
                         </nav>
@@ -197,7 +197,7 @@
                         </div>
 
                         <p class="text-xs text-zinc-400">
-                            © 2026 Penniel SOftware. All rights reserved.
+                            © 2026 Penniel Software. All rights reserved.
                         </p>
                     </div>
                 </div>

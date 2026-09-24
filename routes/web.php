@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::livewire('/', 'pages::welcome')->name('home');
 Route::livewire('/shop', 'pages::shop')->name('shop');
-Route::livewire('/product/{id}', 'pages::product')->name('product');
+Route::livewire('/product/{product}', 'pages::product')->name('product');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -352,7 +352,7 @@ class extends Component
                             wire:click="addToCart({{ $product->id }})"
                             x-data="{ added: false }"
                             @click="added = true; setTimeout(() => added = false, 1200)"
-                            class="absolute bottom-4 right-4 flex h-12 w-12 translate-y-3 items-center justify-center rounded-full bg-white text-zinc-950 opacity-0 shadow-xl transition-all duration-300 hover:scale-110 group-hover:translate-y-0 group-hover:opacity-100"
+                            class="absolute bottom-4 cursor-pointer right-4 flex h-12 w-12 translate-y-3 items-center justify-center rounded-full bg-white text-zinc-950 opacity-0 shadow-xl transition-all duration-300 hover:scale-110 group-hover:translate-y-0 group-hover:opacity-100"
                             :class="added ? 'scale-110 bg-emerald-500 text-white' : 'bg-white text-zinc-950'"
                         >
                             <span
@@ -378,29 +378,31 @@ class extends Component
 
                     </div>
 
-                    <div class="pt-5">
-                        <div class="flex items-start justify-between gap-4">
+                    <a wire:navigate href="{{ route('product', $product->id) }}">
+                        <div class="pt-5">
+                            <div class="flex items-start justify-between gap-4">
 
-                            <div class="min-w-0">
-                                <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">
-                                    {{ $product->category->name }}
+                                <div class="min-w-0">
+                                    <p class="mb-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-400">
+                                        {{ $product->category->name }}
+                                    </p>
+
+                                    <h3 class="truncate text-base font-semibold tracking-tight">
+                                        {{ $product->name }}
+                                    </h3>
+                                </div>
+
+                                <p class="shrink-0 text-sm font-semibold">
+                                    M {{ number_format($product->price, 2) }}
                                 </p>
 
-                                <h3 class="truncate text-base font-semibold tracking-tight">
-                                    {{ $product->name }}
-                                </h3>
                             </div>
 
-                            <p class="shrink-0 text-sm font-semibold">
-                                M {{ number_format($product->price, 2) }}
+                            <p class="mt-2 line-clamp-2 text-sm leading-6 text-zinc-500">
+                                {{ $product->description }}
                             </p>
-
                         </div>
-
-                        <p class="mt-2 line-clamp-2 text-sm leading-6 text-zinc-500">
-                            {{ $product->description }}
-                        </p>
-                    </div>
+                    </a>
                 </article>
             @endforeach
 
